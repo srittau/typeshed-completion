@@ -191,6 +191,7 @@ Package names in *italics* are not documented in the [Python 3.7 Library Referen
 | pyclbr                     | *unchecked*   |
 | pydoc                      | missing       |
 | *pydoc_data*               | missing       |
+| *pyexpat*                  | missing       | identical to xml.parsers.expat |
 | queue                      | *unchecked*   |
 | quopri                     | *unchecked*   |
 | random                     | *unchecked*   |
