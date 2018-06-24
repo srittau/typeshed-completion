@@ -11,8 +11,8 @@ Package names in *italics* are not documented in the [Python 3.7 Library Referen
 
 # Completion
 
-| Package                    | Completion    |
-| -------------------------- | ------------- |
+| Package                    | Completion    | Notes |
+| -------------------------- | ------------- | ----- |
 | \_\_future\_\_             | **complete**  |
 | *_ast*                     | *unchecked*   |
 | *_bisect*                  | *unchecked*   |
@@ -277,7 +277,7 @@ Package names in *italics* are not documented in the [Python 3.7 Library Referen
 | winsound                   | missing       |
 | wsgiref                    | *unchecked*   |
 | xdrlib                     | *unchecked*   |
-| *xml*                      | *unchecked*   |
+| xml                        | **complete**  | empty |
 | xml.etree.ElementTree      | *unchecked*   |
 | xml.dom                    | missing       |
 | xml.dom.minidom            | missing       |
