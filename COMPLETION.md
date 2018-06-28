@@ -191,7 +191,7 @@ Package names in *italics* are not documented in the [Python 3.7 Library Referen
 | pyclbr                     | *unchecked*   |
 | pydoc                      | missing       |
 | *pydoc_data*               | missing       |
-| *pyexpat*                  | missing       | identical to xml.parsers.expat |
+| *pyexpat*                  | **complete**  | identical to xml.parsers.expat |
 | queue                      | *unchecked*   |
 | quopri                     | *unchecked*   |
 | random                     | *unchecked*   |
@@ -283,7 +283,7 @@ Package names in *italics* are not documented in the [Python 3.7 Library Referen
 | xml.dom                    | missing       |
 | xml.dom.minidom            | missing       |
 | xml.dom.pulldom            | missing       |
-| xml.parsers.expat          | missing       |
+| xml.parsers.expat          | **complete**  |
 | xml.sax                    | *unchecked*   |
 | xml.sax.handler            | *unchecked*   |
 | xml.sax.saxutils           | *unchecked*   |
