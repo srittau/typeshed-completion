@@ -207,7 +207,7 @@ Package names in *italics* are not documented in the [Python 3.7 Library Referen
 | selectors                  | *unchecked*   |
 | shelve                     | *unchecked*   |
 | shlex                      | *unchecked*   |
-| shutil                     | *unchecked*   |
+| shutil                     | **complete**  |
 | signal                     | *unchecked*   |
 | site                       | *unchecked*   |
 | smtpd                      | *unchecked*   |
