@@ -2,11 +2,16 @@
 
 import argparse
 import ast
+import glob
 import os
+import os.path
 import sys
-from typing import Optional, Iterable, Sequence
+from pathlib import Path
+from typing import Optional, Iterable, Sequence, List, Tuple
 
 _current_file = ""
+
+TYPESHED_BASE_PATH = Path(os.path.join("typeshed", "stdlib"))
 
 
 class Logger:
@@ -36,15 +41,19 @@ log = Logger()
 
 def main() -> None:
     file = parse_args()
-    if os.path.isdir(file):
-        check_dir(file)
+    if file is None:
+        check_completion()
     else:
-        check_file(file)
+        if os.path.isdir(file):
+            check_dir(file)
+        else:
+            check_file(file)
 
 
-def parse_args() -> str:
+def parse_args() -> Optional[str]:
     parser = argparse.ArgumentParser(description="Find typeshed problems.")
-    parser.add_argument("path", help="stub file or directory containing stubs")
+    parser.add_argument("path", nargs="?",
+                        help="stub file or directory containing stubs")
     parser.add_argument("-a", "--warn-any", action="store_true",
                         help="warn about annotations with Any")
     parser.add_argument("-M", "--hide-missing", action="store_true",
@@ -56,6 +65,68 @@ def parse_args() -> str:
         log.log_missing = False
     return args.path
 
+
+def check_completion() -> None:
+    to_check = read_completion()
+    for module in to_check:
+        filename = find_module_file(module)
+        check_file(filename)
+
+
+def read_completion() -> List[str]:
+    modules = []
+    with open("COMPLETION.md") as f:
+        state = "start"
+        lineno = 1
+        for line in f:
+            if state == "start":
+                if line.startswith("| Package"):
+                    state = "table-start"
+            elif state == "table-start":
+                if not line.startswith("| -------"):
+                    raise ValueError(f"{lineno}:invalid COMPLETION.md file")
+                state = "table-body"
+            elif state == "table-body":
+                if line.startswith("| "):
+                    modules.append(parse_completion_line(line, lineno))
+                else:
+                    state = "table-end"
+            lineno += 1
+        if state not in ["table-body", "table-end"]:
+            raise ValueError("no completion table found in COMPLETION.md")
+    return [m for m, c in modules if c]
+
+
+def parse_completion_line(line: str, lineno: int) -> Tuple[str, bool]:
+    line = line.rstrip()
+    if not line.startswith("|") or not line.endswith("|"):
+        raise ValueError(f"{lineno}:invalid table row")
+    cells = [l.strip() for l in line[1:-1].split("|")]
+    if len(cells) < 2:
+        raise ValueError(f"{lineno}:not enough table cells")
+    module = cells[0].replace("*", "").replace("\\", "")
+    unchecked = cells[1] == "*unchecked*"
+    return module, unchecked
+
+
+_dirs: Optional[List[Path]] = None
+
+
+def find_module_file(module: str) -> str:
+    global _dirs
+    if _dirs is None:
+        _dirs = [TYPESHED_BASE_PATH / "2and3"] + \
+            list(TYPESHED_BASE_PATH.glob("3*"))
+    module_path = os.path.join(*module.split("."))
+    for dir in _dirs:
+        paths = [
+            dir / (module_path + ".pyi"),
+            dir / module_path / "__init__.pyi",
+        ]
+        for path in paths:
+            if path.exists():
+                return str(path)
+    raise FileNotFoundError(module + ".pyi")
 
 def check_dir(dirname: str) -> None:
     for file in os.scandir(dirname):
