@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import ast
+import os
 import sys
 from typing import Optional
 
@@ -28,14 +29,25 @@ log = Logger()
 
 def main() -> None:
     file = parse_args()
-    check_file(file)
+    if os.path.isdir(file):
+        check_dir(file)
+    else:
+        check_file(file)
 
 
 def parse_args() -> str:
     if len(sys.argv) != 2:
-        print(f"Usage: {sys.argv[0]} FILENAME", file=sys.stderr)
+        print(f"Usage: {sys.argv[0]} FILENAME_OR_DIRECTORY", file=sys.stderr)
         sys.exit(1)
     return sys.argv[1]
+
+
+def check_dir(dirname: str) -> None:
+    for file in os.scandir(dirname):
+        if file.is_dir():
+            check_dir(file.path)
+        else:
+            check_file(file.path)
 
 
 def check_file(filename: str) -> None:
