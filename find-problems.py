@@ -3,7 +3,7 @@
 import ast
 import os
 import sys
-from typing import Optional
+from typing import Optional, Iterable, Sequence
 
 _current_file = ""
 
@@ -63,10 +63,31 @@ def unhandled_ast_type_msg(node: ast.AST) -> str:
     return f"{_current_file}:{node.lineno}:unhandled ast type {type(node)}"
 
 
+def is_docstring(child: ast.AST) -> bool:
+    return isinstance(child, ast.Expr) and isinstance(child.value, ast.Str)
+
+
+def targets_name(targets: Sequence[ast.AST]) -> str:
+    if len(targets) != 1:
+        raise ValueError("multiple assignment targets are not supported")
+    if not isinstance(targets[0], ast.Name):
+        raise ValueError("assignment target is not a simple name")
+    return targets[0].id
+
+
 def parse_module(module: ast.Module) -> None:
-    for child in module.body:
-        if isinstance(child, ast.ImportFrom):
+    parse_module_body(module.body)
+
+
+def parse_module_body(body: Iterable[ast.stmt]) -> None:
+    for child in body:
+        if isinstance(child, ast.Import) or isinstance(child, ast.ImportFrom):
             pass  # ignore
+        elif is_docstring(child):
+            pass  # ignore
+        elif isinstance(child, ast.If):
+            parse_module_body(child.body)
+            parse_module_body(child.orelse)
         elif isinstance(child, ast.Assign):
             parse_assign(child)
         elif isinstance(child, ast.AnnAssign):
@@ -80,16 +101,19 @@ def parse_module(module: ast.Module) -> None:
 
 
 def parse_assign(assign: ast.Assign) -> None:
-    names = ", ".join(n.id for n in assign.targets)
-    if isinstance(assign.value, ast.Subscript):
+    if isinstance(assign.value, ast.Name) or \
+            isinstance(assign.value, ast.Subscript) or \
+            isinstance(assign.value, ast.Call) or \
+            isinstance(assign.value, ast.Attribute):
         pass  # alias
     elif isinstance(assign.value, ast.Ellipsis) or \
             isinstance(assign.value, ast.Str) or \
-            isinstance(assign.value, ast.Num):
-        log.missing(assign.lineno, names)
+            isinstance(assign.value, ast.Num) or \
+            isinstance(assign.value, ast.NameConstant):
+        name = targets_name(assign.targets)
+        log.missing(assign.lineno, name)
     else:
-        log.warn(assign.lineno,
-                 f"'{names}'is potentially missing an annotation")
+        raise ValueError(unhandled_ast_type_msg(assign.value))
 
 
 def parse_ann_assign(assign: ast.AnnAssign) -> None:
@@ -129,9 +153,17 @@ def parse_function_def(function_def: ast.FunctionDef,
 def parse_class_def(class_def: ast.ClassDef) -> None:
     if is_empty_class(class_def):
         return
-    class_name = class_def.name
-    for child in class_def.body:
-        if isinstance(child, ast.Assign):
+    parse_class_body(class_def.name, class_def.body)
+
+
+def parse_class_body(class_name: str, body: Iterable[ast.stmt]) -> None:
+    for child in body:
+        if is_docstring(child):
+            pass
+        elif isinstance(child, ast.If):
+            parse_class_body(class_name, child.body)
+            parse_class_body(class_name, child.orelse)
+        elif isinstance(child, ast.Assign):
             parse_class_assign(class_name, child)
         elif isinstance(child, ast.AnnAssign):
             parse_class_ann_assign(class_name, child)
@@ -142,8 +174,8 @@ def parse_class_def(class_def: ast.ClassDef) -> None:
 
 
 def parse_class_assign(class_name: str, assign: ast.Assign) -> None:
-    names = ", ".join(f"{class_name}.{t.id}" for t in assign.targets)
-    log.missing(assign.lineno, names)
+    name = targets_name(assign.targets)
+    log.missing(assign.lineno, f"{class_name}.{name}")
 
 
 def parse_class_ann_assign(class_name: str, assign: ast.AnnAssign) -> None:
@@ -154,7 +186,8 @@ def parse_class_ann_assign(class_name: str, assign: ast.AnnAssign) -> None:
 
 def parse_method(class_name: str, method: ast.FunctionDef) -> None:
     name = f"{class_name}.{method.name}"
-    decorators = [d.id for d in method.decorator_list]
+    decorators = \
+        [d.id for d in method.decorator_list if isinstance(d, ast.Name)]
     ignore_first_argument = "staticmethod" not in decorators
     return parse_function_def(method, name=name,
                               ignore_first_argument=ignore_first_argument)
@@ -186,8 +219,12 @@ def check_annotation(name: str, parent: ast.AST,
         if annotation.value is not None:
             log.problem(annotation.lineno,
                         f"'{name}' is annotated with {annotation.value}")
+    elif isinstance(annotation, ast.Str):
+        pass
     elif isinstance(annotation, ast.Subscript):
         pass  # generic
+    elif isinstance(annotation, ast.Attribute):
+        pass
     else:
         raise ValueError(unhandled_ast_type_msg(annotation))
 
