@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import argparse
 import ast
 import os
 import sys
@@ -9,17 +10,23 @@ _current_file = ""
 
 
 class Logger:
+    def __init__(self, *, log_any: bool = False, log_missing: bool = True) \
+            -> None:
+        self.log_any = log_any
+        self.log_missing = log_missing
+
     def problem(self, lineno: int, problem: str) -> None:
         print(f"{_current_file}:{lineno}:{problem}")
 
-    def warn(self, lineno: int, problem: str) -> None:
-        print(f"{_current_file}:{lineno}:{problem}")
-
     def missing(self, lineno: int, name: str) -> None:
+        if not self.log_missing:
+            return
         message = f"'{name}' is missing an annotation"
         print(f"{_current_file}:{lineno}:{message}")
-    
+
     def any(self, lineno: int, name: str) -> None:
+        if not self.log_any:
+            return
         message = f"'{name}' is annotated with Any"
         print(f"{_current_file}:{lineno}:{message}")
 
@@ -36,10 +43,18 @@ def main() -> None:
 
 
 def parse_args() -> str:
-    if len(sys.argv) != 2:
-        print(f"Usage: {sys.argv[0]} FILENAME_OR_DIRECTORY", file=sys.stderr)
-        sys.exit(1)
-    return sys.argv[1]
+    parser = argparse.ArgumentParser(description="Find typeshed problems.")
+    parser.add_argument("path", help="stub file or directory containing stubs")
+    parser.add_argument("-a", "--warn-any", action="store_true",
+                        help="warn about annotations with Any")
+    parser.add_argument("-M", "--hide-missing", action="store_true",
+                        help="do not warn about missing annotations")
+    args = parser.parse_args()
+    if args.warn_any:
+        log.log_any = True
+    if args.hide_missing:
+        log.log_missing = False
+    return args.path
 
 
 def check_dir(dirname: str) -> None:
