@@ -264,6 +264,8 @@ def parse_class_body(class_def: ast.ClassDef, body: Iterable[ast.stmt]) -> None:
             parse_class_ann_assign(class_def.name, child)
         elif isinstance(child, ast.FunctionDef):
             parse_method(class_def, child)
+        elif isinstance(child, ast.ClassDef):
+            parse_class_def(child)
         else:
             log.unhandled_ast_type(child)
 
