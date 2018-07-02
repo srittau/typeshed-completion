@@ -165,12 +165,10 @@ def is_docstring(child: ast.AST) -> bool:
     return isinstance(child, ast.Expr) and isinstance(child.value, ast.Str)
 
 
-def targets_name(targets: Sequence[ast.AST]) -> str:
-    if len(targets) != 1:
-        raise ValueError("multiple assignment targets are not supported")
-    if not isinstance(targets[0], ast.Name):
+def targets_names(targets: Sequence[ast.AST]) -> str:
+    if not all(isinstance(t, ast.Name) for t in targets):
         raise ValueError("assignment target is not a simple name")
-    return targets[0].id
+    return ", ".join([t.id for t in targets])
 
 
 def parse_module(module: ast.Module) -> None:
@@ -199,7 +197,7 @@ def parse_module_body(body: Iterable[ast.stmt]) -> None:
 
 
 def parse_assign(assign: ast.Assign) -> None:
-    name = targets_name(assign.targets)
+    name = targets_names(assign.targets)
     if assign.type_comment is not None:
         check_annotation(name, assign, None, assign.type_comment)
     elif isinstance(assign.value, ast.Name) or \
@@ -271,7 +269,7 @@ def parse_class_body(class_def: ast.ClassDef, body: Iterable[ast.stmt]) -> None:
 
 
 def parse_class_assign(class_name: str, assign: ast.Assign) -> None:
-    name = targets_name(assign.targets)
+    name = targets_names(assign.targets)
     if isinstance(assign.value, ast.Name):
         pass  # alias
     else:
