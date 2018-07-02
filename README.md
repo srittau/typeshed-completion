@@ -11,8 +11,7 @@ in typeshed. By default it will check the modules marked as *unchecked*
 in `COMPLETION.md`. It can also be called with a single stub file or a
 directory of stub files as argument.
 
-The following flags are supported:
+The script does not support type comments, and will warn about missing
+annotations in those cases. Suppress these warnings with `-M`. To warn
+about `Any` annotations, supply `-a`.
 
-* `-a` - Warn about `Any` annotations.
-* `-c` - Warn about type comments.
-* `-M` - Suppress warnings about missing annotations.
