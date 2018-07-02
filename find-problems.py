@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
 import argparse
-import ast
 import glob
 import os
 import os.path
 import sys
+import typed_ast.ast3 as ast
 from pathlib import Path
 from typing import Optional, Iterable, Sequence, List, Tuple
 
@@ -187,7 +187,10 @@ def parse_module_body(body: Iterable[ast.stmt]) -> None:
 
 
 def parse_assign(assign: ast.Assign) -> None:
-    if isinstance(assign.value, ast.Name) or \
+    name = targets_name(assign.targets)
+    if assign.type_comment is not None:
+        check_annotation(name, assign, None, assign.type_comment)
+    elif isinstance(assign.value, ast.Name) or \
             isinstance(assign.value, ast.Subscript) or \
             isinstance(assign.value, ast.Call) or \
             isinstance(assign.value, ast.Attribute):
@@ -196,7 +199,6 @@ def parse_assign(assign: ast.Assign) -> None:
             isinstance(assign.value, ast.Str) or \
             isinstance(assign.value, ast.Num) or \
             isinstance(assign.value, ast.NameConstant):
-        name = targets_name(assign.targets)
         log.missing(assign.lineno, name)
     else:
         raise ValueError(unhandled_ast_type_msg(assign.value))
@@ -215,9 +217,11 @@ def parse_function_def(function_def: ast.FunctionDef,
 
     def parse_argument(argument: ast.arg) -> None:
         arg_name = f"{name}({argument.arg})"
-        check_annotation(arg_name, function_def, argument.annotation)        
+        check_annotation(arg_name, function_def, argument.annotation,
+                         argument.type_comment)
 
-    check_annotation(name, function_def, function_def.returns)
+    check_annotation(name, function_def, function_def.returns,
+                     function_def.type_comment)
     args = function_def.args
     normal_args = args.args
     if ignore_first_argument:
@@ -261,7 +265,7 @@ def parse_class_body(class_name: str, body: Iterable[ast.stmt]) -> None:
 
 def parse_class_assign(class_name: str, assign: ast.Assign) -> None:
     name = targets_name(assign.targets)
-    log.missing(assign.lineno, f"{class_name}.{name}")
+    check_annotation(name, assign, None, assign.type_comment)
 
 
 def parse_class_ann_assign(class_name: str, assign: ast.AnnAssign) -> None:
@@ -293,9 +297,16 @@ def is_empty_class(class_def: ast.ClassDef) -> bool:
 
 
 def check_annotation(name: str, parent: ast.AST,
-                     annotation: Optional[ast.AST]) -> None:
-    if annotation is None:
+                     annotation: Optional[ast.AST],
+                     type_comment: Optional[str] = None) -> None:
+    if annotation is not None and type_comment is not None:
+        log.problem(parent.lineno,
+                    f"'{name}' has a type annotation and a type comment")
+    elif annotation is None and type_comment is None:
         log.missing(parent.lineno, name)
+    elif type_comment is not None:
+        if type_comment == "Any":
+            log.any(parent.lineno, name)
     elif isinstance(annotation, ast.Ellipsis):
         log.problem(annotation.lineno, f"'{name}' is annotated with ellipsis")
     elif isinstance(annotation, ast.Name):
