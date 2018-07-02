@@ -277,7 +277,10 @@ def parse_class_body(class_name: str, body: Iterable[ast.stmt]) -> None:
 
 def parse_class_assign(class_name: str, assign: ast.Assign) -> None:
     name = targets_name(assign.targets)
-    check_annotation(name, assign, None, assign.type_comment)
+    if isinstance(assign.value, ast.Name):
+        pass  # alias
+    else:
+        check_annotation(name, assign, None, assign.type_comment)
 
 
 def parse_class_ann_assign(class_name: str, assign: ast.AnnAssign) -> None:
