@@ -15,10 +15,12 @@ TYPESHED_BASE_PATH = Path(os.path.join("typeshed", "stdlib"))
 
 
 class Logger:
-    def __init__(self, *, log_any: bool = False, log_missing: bool = True) \
+    def __init__(self, *, log_any: bool = False, log_missing: bool = True,
+                 log_type_comments: bool = False) \
             -> None:
         self.log_any = log_any
         self.log_missing = log_missing
+        self.log_type_comments = log_type_comments
 
     def problem(self, lineno: int, problem: str) -> None:
         print(f"{_current_file}:{lineno}:{problem}")
@@ -27,6 +29,12 @@ class Logger:
         if not self.log_missing:
             return
         message = f"'{name}' is missing an annotation"
+        print(f"{_current_file}:{lineno}:{message}")
+
+    def type_comment(self, lineno: int, name: str) -> None:
+        if not self.log_type_comments:
+            return
+        message = f"'{name}' has a type comment"
         print(f"{_current_file}:{lineno}:{message}")
 
     def any(self, lineno: int, name: str) -> None:
@@ -56,11 +64,15 @@ def parse_args() -> Optional[str]:
                         help="stub file or directory containing stubs")
     parser.add_argument("-a", "--warn-any", action="store_true",
                         help="warn about annotations with Any")
+    parser.add_argument("-c", "--warn-type-comments", action="store_true",
+                        help="warn about type comments")
     parser.add_argument("-M", "--hide-missing", action="store_true",
                         help="do not warn about missing annotations")
     args = parser.parse_args()
     if args.warn_any:
         log.log_any = True
+    if args.warn_type_comments:
+        log.log_type_comments = True
     if args.hide_missing:
         log.log_missing = False
     return args.path
@@ -305,6 +317,7 @@ def check_annotation(name: str, parent: ast.AST,
     elif annotation is None and type_comment is None:
         log.missing(parent.lineno, name)
     elif type_comment is not None:
+        log.type_comment(parent.lineno, name)
         if type_comment == "Any":
             log.any(parent.lineno, name)
     elif isinstance(annotation, ast.Ellipsis):
