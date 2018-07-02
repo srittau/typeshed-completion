@@ -235,12 +235,7 @@ def parse_function_def(function_def: ast.FunctionDef,
     check_annotation(name, function_def, function_def.returns,
                      function_def.type_comment)
     args = function_def.args
-    normal_args = args.args
-    if ignore_first_argument:
-        if len(normal_args) < 1:
-            log.problem(function_def.lineno,
-                        f"'{name}' requires at least one argument")
-        normal_args = normal_args[1:]
+    normal_args = args.args[1:] if ignore_first_argument else args.args
 
     for arg in normal_args:
         parse_argument(arg)
@@ -255,22 +250,22 @@ def parse_function_def(function_def: ast.FunctionDef,
 def parse_class_def(class_def: ast.ClassDef) -> None:
     if is_empty_class(class_def):
         return
-    parse_class_body(class_def.name, class_def.body)
+    parse_class_body(class_def, class_def.body)
 
 
-def parse_class_body(class_name: str, body: Iterable[ast.stmt]) -> None:
+def parse_class_body(class_def: ast.ClassDef, body: Iterable[ast.stmt]) -> None:
     for child in body:
         if is_docstring(child):
             pass
         elif isinstance(child, ast.If):
-            parse_class_body(class_name, child.body)
-            parse_class_body(class_name, child.orelse)
+            parse_class_body(class_def, child.body)
+            parse_class_body(class_def, child.orelse)
         elif isinstance(child, ast.Assign):
-            parse_class_assign(class_name, child)
+            parse_class_assign(class_def.name, child)
         elif isinstance(child, ast.AnnAssign):
-            parse_class_ann_assign(class_name, child)
+            parse_class_ann_assign(class_def.name, child)
         elif isinstance(child, ast.FunctionDef):
-            parse_method(class_name, child)
+            parse_method(class_def, child)
         else:
             raise ValueError(unhandled_ast_type_msg(child))
 
@@ -289,13 +284,49 @@ def parse_class_ann_assign(class_name: str, assign: ast.AnnAssign) -> None:
     check_annotation(name, assign, assign.annotation)
 
 
-def parse_method(class_name: str, method: ast.FunctionDef) -> None:
-    name = f"{class_name}.{method.name}"
+_SPECIAL_METHODS = [
+    ("CallableMixin", "__call__"),
+]
+
+
+def parse_method(class_def: ast.ClassDef, method: ast.FunctionDef) -> None:
+    name = f"{class_def.name}.{method.name}"
     decorators = \
         [d.id for d in method.decorator_list if isinstance(d, ast.Name)]
+    ignore_first_argument = True
+    if "staticmethod" in decorators:
+        ignore_first_argument = False
+    elif "classmethod" in decorators:
+        check_first_argument(name, method, "cls")
+    elif method.name == "__new__" or method.name == "__init_subclass__":
+        check_first_argument(name, method, "cls")
+    elif is_meta_class(class_def) and method.name != "__init__":
+        check_first_argument(name, method, "cls")
+    elif (class_def.name, method.name) in _SPECIAL_METHODS:
+        pass
+    else:
+        check_first_argument(name, method, "self")
     ignore_first_argument = "staticmethod" not in decorators
     return parse_function_def(method, name=name,
                               ignore_first_argument=ignore_first_argument)
+
+
+def is_meta_class(class_def: ast.ClassDef) -> bool:
+    def is_base(child: ast.AST) -> bool:
+        if not isinstance(child, ast.Name):
+            return False
+        return child.id == "type"
+
+    return any(is_base(c) for c in class_def.bases)
+
+
+def check_first_argument(name: str, method: ast.FunctionDef, argument_name: str) -> None:
+    if len(method.args.args) < 1:
+        log.problem(method.lineno,
+                    f"'{name}' is missing '{argument_name}' argument")
+    elif method.args.args[0].arg != argument_name:
+        log.problem(method.lineno,
+                    f"'{name}'s first argument is not named '{argument_name}'")
 
 
 def is_empty_class(class_def: ast.ClassDef) -> bool:
