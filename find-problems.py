@@ -43,6 +43,10 @@ class Logger:
         message = f"'{name}' is annotated with Any"
         print(f"{_current_file}:{lineno}:{message}")
 
+    def unhandled_ast_type(self, node: ast.AST) -> None:
+        message = f"unhandled ast type {type(node)}"
+        print(f"{_current_file}:{node.lineno}:{message}")
+
 
 log = Logger()
 
@@ -157,10 +161,6 @@ def check_file(filename: str) -> None:
     parse_module(module)
 
 
-def unhandled_ast_type_msg(node: ast.AST) -> str:
-    return f"{_current_file}:{node.lineno}:unhandled ast type {type(node)}"
-
-
 def is_docstring(child: ast.AST) -> bool:
     return isinstance(child, ast.Expr) and isinstance(child.value, ast.Str)
 
@@ -195,7 +195,7 @@ def parse_module_body(body: Iterable[ast.stmt]) -> None:
         elif isinstance(child, ast.ClassDef):
             parse_class_def(child)
         else:
-            raise ValueError(unhandled_ast_type_msg(child))
+            log.unhandled_ast_type(child)
 
 
 def parse_assign(assign: ast.Assign) -> None:
@@ -213,7 +213,7 @@ def parse_assign(assign: ast.Assign) -> None:
             isinstance(assign.value, ast.NameConstant):
         log.missing(assign.lineno, name)
     else:
-        raise ValueError(unhandled_ast_type_msg(assign.value))
+        log.unhandled_ast_type(assign.value)
 
 
 def parse_ann_assign(assign: ast.AnnAssign) -> None:
@@ -267,7 +267,7 @@ def parse_class_body(class_def: ast.ClassDef, body: Iterable[ast.stmt]) -> None:
         elif isinstance(child, ast.FunctionDef):
             parse_method(class_def, child)
         else:
-            raise ValueError(unhandled_ast_type_msg(child))
+            log.unhandled_ast_type(child)
 
 
 def parse_class_assign(class_name: str, assign: ast.Assign) -> None:
@@ -370,7 +370,7 @@ def check_annotation(name: str, parent: ast.AST,
     elif isinstance(annotation, ast.Attribute):
         pass
     else:
-        raise ValueError(unhandled_ast_type_msg(annotation))
+        log.unhandled_ast_type(annotation)
 
 
 if __name__ == "__main__":
