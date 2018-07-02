@@ -17,27 +17,27 @@ Package names in *italics* are not documented in the [Python 3.7 Library Referen
 | *_ast*                     | *unchecked*   |
 | *_bisect*                  | *unchecked*   |
 | *_codecs*                  | *unchecked*   |
-| *_compression*             | *unchecked*   |
+| *_compression*             | incomplete    | missing annotations |
 | *_csv*                     | *unchecked*   |
 | *_curses*                  | *unchecked*   |
 | _dummy_thread              | *unchecked*   |
 | *_heapq*                   | *unchecked*   |
 | *_imp*                     | *unchecked*   |
 | *_importlib_modulespec*    | *unchecked*   |
-| *_json*                    | *unchecked*   |
+| *_json*                    | incomplete    | missing annotations |
 | *_markupbase*              | *unchecked*   |
 | *_operator*                | *unchecked*   |
 | *_posixsubprocess*         | *unchecked*   |
 | *_random*                  | *unchecked*   |
 | *_stat*                    | *unchecked*   |
-| *_subprocess*              | *unchecked*   |
+| *_subprocess*              | incomplete    | missing annotations |
 | _thread                    | *unchecked*   |
 | *_threading_local*         | *unchecked*   |
-| *_tracemalloc*             | *unchecked*   |
+| *_tracemalloc*             | incomplete    | missing annotations |
 | *_warnings*                | *unchecked*   |
 | *_weakref*                 | *unchecked*   |
 | *_weakrefset*              | *unchecked*   |
-| *_winapi*                  | *unchecked*   |
+| *_winapi*                  | incomplete    | missing annotations |
 | abc                        | *unchecked*   |
 | aifc                       | missing       |
 | *antigravity*              | missing       |
@@ -55,7 +55,7 @@ Package names in *italics* are not documented in the [Python 3.7 Library Referen
 | binascii                   | *unchecked*   |
 | binhex                     | *unchecked*   |
 | bisect                     | *unchecked*   |
-| builtins                   | *unchecked*   |
+| builtins                   | incomplete    | missing annotations |
 | bz2                        | *unchecked*   |
 | cProfile                   | *unchecked*   |
 | calendar                   | *unchecked*   |
@@ -85,10 +85,10 @@ Package names in *italics* are not documented in the [Python 3.7 Library Referen
 | curses.ascii               | missing       |
 | curses.panel               | missing       |
 | curses.textpad             | missing       |
-| dataclasses                | *unchecked*   |
+| dataclasses                | incomplete    | missing annotations |
 | datetime                   | *unchecked*   |
 | dbm                        | missing       |
-| decimal                    | *unchecked*   |
+| decimal                    | incomplete    | missing annotations |
 | difflib                    | *unchecked*   |
 | dis                        | *unchecked*   |
 | distutils                  | *unchecked*   |
@@ -105,25 +105,25 @@ Package names in *italics* are not documented in the [Python 3.7 Library Referen
 | fileinput                  | *unchecked*   |
 | fnmatch                    | *unchecked*   |
 | fpectl                     | missing       |
-| formatter                  | *unchecked*   |
-| fractions                  | *unchecked*   |
+| formatter                  | incomplete    | missing annotations |
+| fractions                  | incomplete    | missing annotations |
 | ftplib                     | *unchecked*   |
 | functools                  | *unchecked*   |
 | gc                         | *unchecked*   |
 | *genericpath*              | missing       |
 | getopt                     | *unchecked*   |
 | getpass                    | *unchecked*   |
-| gettext                    | *unchecked*   |
+| gettext                    | incomplete    | missing annotations |
 | glob                       | *unchecked*   |
 | grp                        | *unchecked*   |
-| gzip                       | *unchecked*   |
+| gzip                       | incomplete    | missing annotations |
 | hashlib                    | *unchecked*   |
 | heapq                      | *unchecked*   |
 | hmac                       | *unchecked*   |
 | html                       | *unchecked*   |
 | html.entities              | *unchecked*   |
 | html.parser                | *unchecked*   |
-| http                       | *unchecked*   |
+| http                       | incomplete    | missing annotations |
 | http.client                | *unchecked*   |
 | http.cookiejar             | *unchecked*   |
 | http.cookies               | *unchecked*   |
@@ -147,7 +147,7 @@ Package names in *italics* are not documented in the [Python 3.7 Library Referen
 | logging.config             | *unchecked*   |
 | logging.handlers           | *unchecked*   |
 | lzma                       | *unchecked*   |
-| macpath                    | *unchecked*   |
+| macpath                    | incomplete    | missing annotations |
 | mailbox                    | missing       |
 | mailcap                    | missing       |
 | marshal                    | *unchecked*   |
@@ -161,12 +161,12 @@ Package names in *italics* are not documented in the [Python 3.7 Library Referen
 | netrc                      | *unchecked*   |
 | nis                        | *unchecked*   |
 | nntplib                    | *unchecked*   |
-| ntpath                     | *unchecked*   |
+| ntpath                     | incomplete    | missing annotations |
 | *nturl2path*               | *unchecked*   |
-| numbers                    | *unchecked*   |
+| numbers                    | incomplete    | missing annotations |
 | *opcode*                   | *unchecked*   |
 | operator                   | *unchecked*   |
-| optparse                   | *unchecked*   |
+| optparse                   | incomplete    | missing annotations |
 | os                         | *unchecked*   |
 | os.path                    | *unchecked*   |
 | ossaudiodev                | missing       |
@@ -181,7 +181,7 @@ Package names in *italics* are not documented in the [Python 3.7 Library Referen
 | plistlib                   | *unchecked*   |
 | poplib                     | *unchecked*   |
 | posix                      | *unchecked*   |
-| posixpath                  | *unchecked*   |
+| posixpath                  | incomplete    | missing annotations |
 | pprint                     | *unchecked*   |
 | profile                    | *unchecked*   |
 | pstats                     | *unchecked*   |
@@ -195,38 +195,38 @@ Package names in *italics* are not documented in the [Python 3.7 Library Referen
 | queue                      | *unchecked*   |
 | quopri                     | *unchecked*   |
 | random                     | *unchecked*   |
-| re                         | *unchecked*   |
+| re                         | incomplete    | missing annotations |
 | readline                   | *unchecked*   |
 | reprlib                    | *unchecked*   |
 | resource                   | *unchecked*   |
 | rlcompleter                | *unchecked*   |
-| runpy                      | *unchecked*   |
+| runpy                      | incomplete    | missing annotations |
 | sched                      | *unchecked*   |
 | secrets                    | *unchecked*   |
 | select                     | *unchecked*   |
 | selectors                  | *unchecked*   |
 | shelve                     | *unchecked*   |
-| shlex                      | *unchecked*   |
+| shlex                      | incomplete    | missing annotations |
 | shutil                     | **complete**  |
-| signal                     | *unchecked*   |
+| signal                     | incomplete    | missing annotations |
 | site                       | *unchecked*   |
 | smtpd                      | *unchecked*   |
-| smtplib                    | *unchecked*   |
+| smtplib                    | incomplete    | missing annotations |
 | sndhdr                     | *unchecked*   |
-| socket                     | *unchecked*   |
+| socket                     | incomplete    | missing annotations |
 | socketserver               | *unchecked*   |
 | spwd                       | *unchecked*   |
 | sqlite3                    | *unchecked*   |
 | *sre_compile*              | *unchecked*   |
-| *sre_constants*            | *unchecked*   |
+| *sre_constants*            | incomplete    | missing annotations |
 | *sre_parse*                | *unchecked*   |
 | ssl                        | *unchecked*   |
-| stat                       | *unchecked*   |
+| stat                       | incomplete    | missing annotations |
 | statistics                 | *unchecked*   |
 | string                     | *unchecked*   |
 | stringprep                 | *unchecked*   |
 | struct                     | *unchecked*   |
-| subprocess                 | *unchecked*   |
+| subprocess                 | incomplete    | missing annotations |
 | sunau                      | *unchecked*   |
 | symbol                     | *unchecked*   |
 | symtable                   | *unchecked*   |
@@ -245,10 +245,10 @@ Package names in *italics* are not documented in the [Python 3.7 Library Referen
 | threading                  | *unchecked*   |
 | time                       | *unchecked*   |
 | timeit                     | *unchecked*   |
-| tkinter                    | *unchecked*   |
+| tkinter                    | incomplete    | missing annotations |
 | tkinter.scrolledtext       | missing       |
 | tkinter.tix                | missing       |
-| tkinter.ttk                | *unchecked*   |
+| tkinter.ttk                | incomplete    | missing annotations |
 | token                      | *unchecked*   |
 | tokenize                   | *unchecked*   |
 | trace                      | *unchecked*   |
@@ -257,13 +257,13 @@ Package names in *italics* are not documented in the [Python 3.7 Library Referen
 | tty                        | *unchecked*   |
 | turtle                     | missing       |
 | types                      | *unchecked*   |
-| typing                     | *unchecked*   |
+| typing                     | incomplete    | missing annotations |
 | unicodedata                | *unchecked*   |
 | unittest                   | *unchecked*   |
 | unittest.mock              | *unchecked*   |
 | urllib                     | *unchecked*   |
 | urllib.error               | *unchecked*   |
-| urllib.parse               | *unchecked*   |
+| urllib.parse               | incomplete    | missing annotations |
 | urllib.request             | *unchecked*   |
 | urllib.response            | *unchecked*   |
 | urllib.robotparser         | *unchecked*   |
@@ -284,10 +284,10 @@ Package names in *italics* are not documented in the [Python 3.7 Library Referen
 | xml.dom.minidom            | missing       |
 | xml.dom.pulldom            | missing       |
 | xml.parsers.expat          | **complete**  |
-| xml.sax                    | *unchecked*   |
-| xml.sax.handler            | *unchecked*   |
-| xml.sax.saxutils           | *unchecked*   |
-| xml.sax.xmlreader          | *unchecked*   |
+| xml.sax                    | incomplete    | missing annotations |
+| xml.sax.handler            | incomplete    | missing annotations |
+| xml.sax.saxutils           | incomplete    | missing annotations |
+| xml.sax.xmlreader          | incomplete    | missing annotations |
 | xmlrpc                     | missing       |
 | xmlrpc.client              | missing       |
 | xmlrpc.server              | missing       |
