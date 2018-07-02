@@ -148,7 +148,7 @@ def check_dir(dirname: str) -> None:
     for file in os.scandir(dirname):
         if file.is_dir():
             check_dir(file.path)
-        else:
+        elif file.name.endswith(".pyi"):
             check_file(file.path)
 
 
