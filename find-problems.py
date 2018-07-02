@@ -205,13 +205,8 @@ def parse_assign(assign: ast.Assign) -> None:
             isinstance(assign.value, ast.Call) or \
             isinstance(assign.value, ast.Attribute):
         pass  # alias
-    elif isinstance(assign.value, ast.Ellipsis) or \
-            isinstance(assign.value, ast.Str) or \
-            isinstance(assign.value, ast.Num) or \
-            isinstance(assign.value, ast.NameConstant):
-        log.missing(assign.lineno, name)
     else:
-        log.unhandled_ast_type(assign.value)
+        log.missing(assign.lineno, name)
 
 
 def parse_ann_assign(assign: ast.AnnAssign) -> None:
