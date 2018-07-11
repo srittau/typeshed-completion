@@ -131,7 +131,7 @@ Package names in *italics* are not documented in the [Python 3.7 Library Referen
 | *idlelib*                  | missing       |
 | imaplib                    | *unchecked*   |
 | imaplib                    | missing       |
-| imghdr                     | missing       |
+| imghdr                     | **complete**  |
 | imp                        | *unchecked*   |
 | importlib                  | *unchecked*   |
 | inspect                    | *unchecked*   |
