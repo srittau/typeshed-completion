@@ -110,7 +110,7 @@ Package names in *italics* are not documented in the [Python 3.7 Library Referen
 | ftplib                     | *unchecked*   |
 | functools                  | *unchecked*   |
 | gc                         | *unchecked*   |
-| *genericpath*              | missing       |
+| *genericpath*              | **complete**  |
 | getopt                     | *unchecked*   |
 | getpass                    | *unchecked*   |
 | gettext                    | incomplete    | missing annotations |
