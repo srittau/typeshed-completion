@@ -13,6 +13,8 @@ _current_file = ""
 
 TYPESHED_BASE_PATH = Path(os.path.join("typeshed", "stdlib"))
 
+_ENUM_BASES = ["Enum", "IntEnum", "Flag", "IntFlag"]
+
 
 class Logger:
     def __init__(self, *, log_any: bool = False, log_missing: bool = True,
@@ -243,7 +245,10 @@ def parse_function_def(function_def: ast.FunctionDef,
 def parse_class_def(class_def: ast.ClassDef) -> None:
     if is_empty_class(class_def):
         return
-    parse_class_body(class_def, class_def.body)
+    elif is_enum(class_def):
+        parse_enum_body(class_def)
+    else:
+        parse_class_body(class_def, class_def.body)
 
 
 def parse_class_body(class_def: ast.ClassDef, body: Iterable[ast.stmt]) -> None:
@@ -261,6 +266,20 @@ def parse_class_body(class_def: ast.ClassDef, body: Iterable[ast.stmt]) -> None:
             parse_method(class_def, child)
         elif isinstance(child, ast.ClassDef):
             parse_class_def(child)
+        else:
+            log.unhandled_ast_type(child)
+
+
+def parse_enum_body(class_def: ast.ClassDef) -> None:
+    for child in class_def.body:
+        if isinstance(child, ast.Assign):
+            if not isinstance(child.value, ast.Ellipsis):
+                log.problem(child.lineno,
+                            "Enum value not annotated with an ellipsis")
+            check_annotation(class_def.name, child, None, child.type_comment,
+                             optional=True)
+        elif isinstance(child, ast.FunctionDef):
+            parse_method(class_def, child)
         else:
             log.unhandled_ast_type(child)
 
@@ -337,14 +356,26 @@ def is_empty_class(class_def: ast.ClassDef) -> bool:
     return True
 
 
+def is_enum(class_def: ast.ClassDef) -> bool:
+    if class_def.name == "auto" or class_def.name in _ENUM_BASES:
+        return False
+    base_names = [b.id for b in class_def.bases if isinstance(b, ast.Name)]
+    if len(base_names) == 0:
+        return False
+    return any(bn in _ENUM_BASES for bn in base_names)
+
+
 def check_annotation(name: str, parent: ast.AST,
                      annotation: Optional[ast.AST],
-                     type_comment: Optional[str] = None) -> None:
+                     type_comment: Optional[str] = None,
+                     *,
+                     optional: bool = False) -> None:
     if annotation is not None and type_comment is not None:
         log.problem(parent.lineno,
                     f"'{name}' has a type annotation and a type comment")
     elif annotation is None and type_comment is None:
-        log.missing(parent.lineno, name)
+        if not optional:
+            log.missing(parent.lineno, name)
     elif type_comment is not None:
         log.type_comment(parent.lineno, name)
         if type_comment == "Any":
