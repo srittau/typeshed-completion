@@ -262,7 +262,7 @@ Package names in *italics* are not documented in the [Python 3.7 Library Referen
 | unittest                   | *unchecked*   |
 | unittest.mock              | *unchecked*   |
 | urllib                     | *unchecked*   |
-| urllib.error               | *unchecked*   |
+| urllib.error               | incomplete.   | missing annotations |
 | urllib.parse               | incomplete    | missing annotations |
 | urllib.request             | *unchecked*   |
 | urllib.response            | *unchecked*   |
