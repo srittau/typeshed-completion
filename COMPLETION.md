@@ -211,7 +211,7 @@ Package names in *italics* are not documented in the [Python 3.7 Library Referen
 | signal                     | incomplete    | missing annotations |
 | site                       | *unchecked*   |
 | smtpd                      | *unchecked*   |
-| smtplib                    | incomplete    | missing annotations |
+| smtplib                    | **complete**  | missing annotations |
 | sndhdr                     | *unchecked*   |
 | socket                     | incomplete    | missing annotations |
 | socketserver               | *unchecked*   |
