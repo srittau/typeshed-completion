@@ -292,6 +292,6 @@ Package names in *italics* are not documented in the [Python 3.7 Library Referen
 | xmlrpc.client              | missing       |
 | xmlrpc.server              | missing       |
 | zipapp                     | *unchecked*   |
-| zipfile                    | *unchecked*   |
+| zipfile                    | incomplete    | missing at least `ZipExtFile` |
 | zipimport                  | *unchecked*   |
 | zlib                       | *unchecked*   |
