@@ -264,7 +264,7 @@ Package names in *italics* are not documented in the [Python 3.7 Library Referen
 | urllib                     | *unchecked*   |
 | urllib.error               | incomplete.   | missing annotations |
 | urllib.parse               | incomplete    | missing annotations |
-| urllib.request             | *unchecked*   |
+| urllib.request             | incomplete    |
 | urllib.response            | *unchecked*   |
 | urllib.robotparser         | *unchecked*   |
 | uu                         | *unchecked*   |
