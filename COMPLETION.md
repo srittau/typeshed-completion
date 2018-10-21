@@ -140,7 +140,7 @@ Package names in *italics* are not documented in the [Python 3.7 Library Referen
 | itertools                  | *unchecked*   |
 | json                       | *unchecked*   |
 | keyword                    | *unchecked*   |
-| lib2to3                    | *unchecked*   |
+| lib2to3                    | incomplete    | missing several modules |
 | linecache                  | *unchecked*   |
 | locale                     | *unchecked*   |
 | logging                    | *unchecked*   |
