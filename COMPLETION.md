@@ -99,7 +99,7 @@ Package names in *italics* are not documented in the [Python 3.7 Library Referen
 | ensurepip                  | missing       |
 | enum                       | *unchecked*   |
 | errno                      | *unchecked*   |
-| faulthandler               | missing       |
+| faulthandler               | **complete**  |
 | fcntl                      | *unchecked*   |
 | filecmp                    | *unchecked*   |
 | fileinput                  | *unchecked*   |
