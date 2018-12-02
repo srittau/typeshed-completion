@@ -14,7 +14,7 @@ Package names in *italics* are not documented in the [Python 3.7 Library Referen
 | Package                    | Completion    | Notes |
 | -------------------------- | ------------- | ----- |
 | \_\_future\_\_             | **complete**  |
-| *_ast*                     | *unchecked*   |
+| *_ast*                     | incomplete    | missing `excepthandler` and `Constant` |
 | *_bisect*                  | *unchecked*   |
 | *_codecs*                  | *unchecked*   |
 | *_compression*             | incomplete    | missing annotations |
@@ -44,7 +44,7 @@ Package names in *italics* are not documented in the [Python 3.7 Library Referen
 | argparse                   | *unchecked*   |
 | array                      | *unchecked*   |
 | atexit                     | missing       |
-| ast                        | *unchecked*   |
+| ast                        | incomplete    | see `_ast` |
 | asynchat                   | *unchecked*   |
 | asyncio                    | *unchecked*   |
 | asyncore                   | *unchecked*   |
