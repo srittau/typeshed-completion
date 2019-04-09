@@ -31,7 +31,7 @@ Package names in *italics* are not documented in the [Python 3.7 Library Referen
 | *_random*                  | *unchecked*   |
 | *_stat*                    | *unchecked*   |
 | *_subprocess*              | incomplete    | missing annotations |
-| _thread                    | *unchecked*   |
+| _thread                    | **complete**  |
 | *_threading_local*         | *unchecked*   |
 | *_tracemalloc*             | incomplete    | missing annotations |
 | *_warnings*                | *unchecked*   |
