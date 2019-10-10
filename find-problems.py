@@ -278,6 +278,12 @@ def parse_enum_body(class_def: ast.ClassDef) -> None:
                             "Enum value not annotated with an ellipsis")
             check_annotation(class_def.name, child, None, child.type_comment,
                              optional=True)
+        elif isinstance(child, ast.AnnAssign):
+            if child.value is not None and not isinstance(child.value, ast.Ellipsis):
+                log.problem(child.lineno,
+                            "Enum value not annotated with an ellipsis")
+            check_annotation(class_def.name, child, child.annotation, None,
+                             optional=True)
         elif isinstance(child, ast.FunctionDef):
             parse_method(class_def, child)
         else:
