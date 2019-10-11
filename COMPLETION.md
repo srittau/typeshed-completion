@@ -1,6 +1,7 @@
 # Legend
 
-Package names in *italics* are not documented in the [Python 3.7 Library Reference](https://docs.python.org/3.7/library/index.html).
+Package names in *italics* are not documented in the
+[Python 3.8 Library Reference](https://docs.python.org/3.8/library/index.html).
 
 | Completion   | Description |
 | ------------ | ----------- |
