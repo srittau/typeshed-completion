@@ -177,7 +177,7 @@ Package names in *italics* are not documented in the
 | pickle                     | *unchecked*   |
 | pickletools                | *unchecked*   |
 | pipes                      | *unchecked*   |
-| pkgutil                    | *unchecked*   |
+| pkgutil                    | **complete**  |
 | platform                   | *unchecked*   |
 | plistlib                   | *unchecked*   |
 | poplib                     | *unchecked*   |
