@@ -97,7 +97,7 @@ Package names in *italics* are not documented in the
 | dummy_threading            | missing       |
 | email                      | *unchecked*   |
 | *encodings*                | *unchecked*   |
-| ensurepip                  | missing       |
+| ensurepip                  | **complete**  |
 | enum                       | *unchecked*   |
 | errno                      | *unchecked*   |
 | faulthandler               | **complete**  |
