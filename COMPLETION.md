@@ -212,7 +212,7 @@ Package names in *italics* are not documented in the
 | signal                     | incomplete    | missing annotations |
 | site                       | *unchecked*   |
 | smtpd                      | *unchecked*   |
-| smtplib                    | **complete**  | missing annotations |
+| smtplib                    | **complete**  | |
 | sndhdr                     | *unchecked*   |
 | socket                     | incomplete    | missing annotations |
 | socketserver               | *unchecked*   |
