@@ -159,6 +159,7 @@ Package names in *italics* are not documented in the
 | msilib                     | missing       |
 | msvcrt                     | *unchecked*   |
 | multiprocessing            | *unchecked*   |
+| multiprocessing.shared\_memory | **complete** | |
 | netrc                      | *unchecked*   |
 | nis                        | *unchecked*   |
 | nntplib                    | *unchecked*   |
