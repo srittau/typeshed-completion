@@ -27,6 +27,7 @@ Package names in *italics* are not documented in the
 | *_importlib_modulespec*    | *unchecked*   |
 | *_json*                    | incomplete    | missing annotations |
 | *_markupbase*              | *unchecked*   |
+| *_msi*                     | **complete**  |
 | *_operator*                | *unchecked*   |
 | *_posixsubprocess*         | *unchecked*   |
 | *_random*                  | *unchecked*   |
@@ -156,7 +157,7 @@ Package names in *italics* are not documented in the
 | mimetypes                  | *unchecked*   |
 | mmap                       | *unchecked*   |
 | modulefinder               | missing       |
-| msilib                     | missing       |
+| msilib                     | **complete**  |
 | msvcrt                     | *unchecked*   |
 | multiprocessing            | *unchecked*   |
 | multiprocessing.shared\_memory | **complete** | |
