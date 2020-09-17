@@ -170,7 +170,7 @@ def is_docstring(child: ast.AST) -> bool:
 def targets_names(targets: Sequence[ast.AST]) -> str:
     if not all(isinstance(t, ast.Name) for t in targets):
         raise ValueError("assignment target is not a simple name")
-    return ", ".join([t.id for t in targets])
+    return ", ".join([t.id for t in targets])  # type: ignore
 
 
 def parse_module(module: ast.Module) -> None:
@@ -413,6 +413,7 @@ def check_annotation(name: str, parent: ast.AST,
     elif isinstance(annotation, ast.Attribute):
         pass
     else:
+        assert annotation is not None
         log.unhandled_ast_type(annotation)
 
 
