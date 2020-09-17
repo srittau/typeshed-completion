@@ -283,9 +283,9 @@ Package names in *italics* are not documented in the
 | xdrlib                     | *unchecked*   |
 | xml                        | **3.8**       | empty |
 | xml.etree.ElementTree      | *unchecked*   |
-| xml.dom                    | missing       |
-| xml.dom.minidom            | missing       |
-| xml.dom.pulldom            | missing       |
+| xml.dom                    | incomplete    | missing functions |
+| xml.dom.minidom            | incomplete    | marked incomplete |
+| xml.dom.pulldom            | incomplete    | marked incomplete |
 | xml.parsers.expat          | **3.8**       |
 | xml.sax                    | incomplete    | missing annotations |
 | xml.sax.handler            | incomplete    | missing annotations |
