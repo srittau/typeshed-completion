@@ -207,8 +207,19 @@ def parse_assign(assign: ast.Assign) -> None:
             isinstance(assign.value, ast.Call) or \
             isinstance(assign.value, ast.Attribute):
         pass  # alias
+    elif is_all_assignment(assign):
+        pass
     else:
         log.missing(assign.lineno, name)
+
+
+def is_all_assignment(assign: ast.Assign) -> bool:
+    if len(assign.targets) != 1:
+        return False
+    target = assign.targets[0]
+    if not isinstance(target, ast.Name):
+        return False
+    return target.id == "__all__"
 
 
 def parse_ann_assign(assign: ast.AnnAssign) -> None:
