@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
 import argparse
+import ast
 import glob
 import os
 import os.path
 import sys
-import typed_ast.ast3 as ast
 from pathlib import Path
 from typing import Optional, Iterable, Sequence, List, Tuple
 
