@@ -158,7 +158,7 @@ Package names in *italics* are not documented in the
 | mmap                       | *unchecked*   |
 | modulefinder               | missing       |
 | msilib                     | **complete**  |
-| msvcrt                     | *unchecked*   |
+| msvcrt                     | **complete**  |
 | multiprocessing            | *unchecked*   |
 | multiprocessing.shared\_memory | **complete** | |
 | netrc                      | *unchecked*   |
