@@ -283,7 +283,7 @@ Package names in *italics* are not documented in the
 | xdrlib                     | *unchecked*   |
 | xml                        | **3.8**       | empty |
 | xml.etree.ElementTree      | *unchecked*   |
-| xml.dom                    | incomplete    | missing functions |
+| xml.dom                    | **3.8**       |
 | xml.dom.minidom            | incomplete    | marked incomplete |
 | xml.dom.pulldom            | incomplete    | marked incomplete |
 | xml.parsers.expat          | **3.8**       |
