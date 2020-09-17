@@ -8,13 +8,13 @@ Package names in *italics* are not documented in the
 | *unchecked*  | stub file exists, but has not been checked, yet |
 | missing      | stub file needs to be written |
 | incomplete   | stub file exists, but some members are missing or have incomplete annotations |
-| **complete** | stub file exists, has all documented members and complete annotations |
+| **3.8**      | stub file exists, has all documented members and complete annotations for the given Python version |
 
 # Completion
 
 | Package                    | Completion    | Notes |
 | -------------------------- | ------------- | ----- |
-| \_\_future\_\_             | **complete**  |
+| \_\_future\_\_             | **3.8**       |
 | *_ast*                     | incomplete    | missing `excepthandler` and `Constant` |
 | *_bisect*                  | *unchecked*   |
 | *_codecs*                  | *unchecked*   |
@@ -27,13 +27,13 @@ Package names in *italics* are not documented in the
 | *_importlib_modulespec*    | *unchecked*   |
 | *_json*                    | incomplete    | missing annotations |
 | *_markupbase*              | *unchecked*   |
-| *_msi*                     | **complete**  |
+| *_msi*                     | **3.8**       |
 | *_operator*                | *unchecked*   |
 | *_posixsubprocess*         | *unchecked*   |
 | *_random*                  | *unchecked*   |
 | *_stat*                    | *unchecked*   |
 | *_subprocess*              | incomplete    | missing annotations |
-| _thread                    | **complete**  |
+| \_thread                   | **3.8**       |
 | *_threading_local*         | *unchecked*   |
 | *_tracemalloc*             | incomplete    | missing annotations |
 | *_warnings*                | *unchecked*   |
@@ -98,10 +98,10 @@ Package names in *italics* are not documented in the
 | dummy_threading            | missing       |
 | email                      | *unchecked*   |
 | *encodings*                | *unchecked*   |
-| ensurepip                  | **complete**  |
+| ensurepip                  | **3.8**       |
 | enum                       | *unchecked*   |
 | errno                      | *unchecked*   |
-| faulthandler               | **complete**  |
+| faulthandler               | **3.8**       |
 | fcntl                      | *unchecked*   |
 | filecmp                    | *unchecked*   |
 | fileinput                  | *unchecked*   |
@@ -112,7 +112,7 @@ Package names in *italics* are not documented in the
 | ftplib                     | *unchecked*   |
 | functools                  | *unchecked*   |
 | gc                         | *unchecked*   |
-| *genericpath*              | **complete**  |
+| *genericpath*              | **3.8**       |
 | getopt                     | *unchecked*   |
 | getpass                    | *unchecked*   |
 | gettext                    | incomplete    | missing annotations |
@@ -133,7 +133,7 @@ Package names in *italics* are not documented in the
 | *idlelib*                  | missing       |
 | imaplib                    | *unchecked*   |
 | imaplib                    | missing       |
-| imghdr                     | **complete**  |
+| imghdr                     | **3.8**       |
 | imp                        | *unchecked*   |
 | importlib                  | *unchecked*   |
 | inspect                    | *unchecked*   |
@@ -157,10 +157,10 @@ Package names in *italics* are not documented in the
 | mimetypes                  | *unchecked*   |
 | mmap                       | *unchecked*   |
 | modulefinder               | missing       |
-| msilib                     | **complete**  |
-| msvcrt                     | **complete**  |
+| msilib                     | **3.8**       |
+| msvcrt                     | **3.8**       |
 | multiprocessing            | *unchecked*   |
-| multiprocessing.shared\_memory | **complete** | |
+| multiprocessing.shared\_memory | **3.8**      | |
 | netrc                      | *unchecked*   |
 | nis                        | *unchecked*   |
 | nntplib                    | *unchecked*   |
@@ -179,7 +179,7 @@ Package names in *italics* are not documented in the
 | pickle                     | *unchecked*   |
 | pickletools                | *unchecked*   |
 | pipes                      | *unchecked*   |
-| pkgutil                    | **complete**  |
+| pkgutil                    | **3.8**       |
 | platform                   | *unchecked*   |
 | plistlib                   | *unchecked*   |
 | poplib                     | *unchecked*   |
@@ -194,7 +194,7 @@ Package names in *italics* are not documented in the
 | pyclbr                     | *unchecked*   |
 | pydoc                      | missing       |
 | *pydoc_data*               | missing       |
-| *pyexpat*                  | **complete**  | identical to xml.parsers.expat |
+| *pyexpat*                  | **3.8**       | identical to xml.parsers.expat |
 | queue                      | *unchecked*   |
 | quopri                     | *unchecked*   |
 | random                     | *unchecked*   |
@@ -210,11 +210,11 @@ Package names in *italics* are not documented in the
 | selectors                  | *unchecked*   |
 | shelve                     | *unchecked*   |
 | shlex                      | incomplete    | missing annotations |
-| shutil                     | **complete**  |
+| shutil                     | **3.8**       |
 | signal                     | incomplete    | missing annotations |
 | site                       | *unchecked*   |
 | smtpd                      | *unchecked*   |
-| smtplib                    | **complete**  | |
+| smtplib                    | **3.8**       | |
 | sndhdr                     | *unchecked*   |
 | socket                     | incomplete    | missing annotations |
 | socketserver               | *unchecked*   |
@@ -281,12 +281,12 @@ Package names in *italics* are not documented in the
 | winsound                   | missing       |
 | wsgiref                    | *unchecked*   |
 | xdrlib                     | *unchecked*   |
-| xml                        | **complete**  | empty |
+| xml                        | **3.8**       | empty |
 | xml.etree.ElementTree      | *unchecked*   |
 | xml.dom                    | missing       |
 | xml.dom.minidom            | missing       |
 | xml.dom.pulldom            | missing       |
-| xml.parsers.expat          | **complete**  |
+| xml.parsers.expat          | **3.8**       |
 | xml.sax                    | incomplete    | missing annotations |
 | xml.sax.handler            | incomplete    | missing annotations |
 | xml.sax.saxutils           | incomplete    | missing annotations |
